@@ -34,7 +34,7 @@ result = new iQuery(
 	"insert into myTable (name) values (:name)"
 	,{ name: "Bob the Builder" }
 );
-inserted_id = result.IdentityCol;
+inserted_id = result.generatedKey;
 ```
 
 ### Options:
