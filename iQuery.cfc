@@ -18,7 +18,7 @@ component {
 				if (!structKeyExists(_.paramVal, 'name')){
 					_.paramVal['name'] = _.k;
 				}
-				_.q.addParam( _.paramVal );
+				_.q.addParam( argumentCollection = _.paramVal );
 			}else{
 				_.q.addParam( name = _.k, value = arguments.parameters[ _.k ], null = (arguments.parameters[ _.k ] == '@NULL@') );
 			}
