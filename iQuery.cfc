@@ -13,7 +13,12 @@ component {
 		_.q.setAttributes( arguments.options );
 
 		for (_.k in listToArray(structKeyList(arguments.parameters))){
-			_.q.addParam( name = _.k, value = arguments.parameters[ _.k ], null = (arguments.parameters[ _.k ] == '@NULL@') );
+			_.paramVal = arguments.parameters[ _.k ];
+			if (isStruct( _.paramVal )){
+				_.q.addParam( _.paramVal );
+			}else{
+				_.q.addParam( name = _.k, value = arguments.parameters[ _.k ], null = (arguments.parameters[ _.k ] == '@NULL@') );
+			}
 		}
 
 		_.r = _.q.execute();
