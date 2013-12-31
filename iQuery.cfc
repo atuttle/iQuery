@@ -15,6 +15,9 @@ component {
 		for (_.k in listToArray(structKeyList(arguments.parameters))){
 			_.paramVal = arguments.parameters[ _.k ];
 			if (isStruct( _.paramVal )){
+				if (!structKeyExists(_.paramVal, 'name')){
+					_.paramVal['name'] = _.k;
+				}
 				_.q.addParam( _.paramVal );
 			}else{
 				_.q.addParam( name = _.k, value = arguments.parameters[ _.k ], null = (arguments.parameters[ _.k ] == '@NULL@') );

@@ -63,3 +63,20 @@ variables.octogenarians = new iQuery("
     where age >= 80 and age <= 89
 ", {}, { dbType: "query" }, { people: variables.people } );
 ```
+
+### Additional Parameter Attributes
+
+In tag-based queries you can set extra attributes like `cfsqltype=cf_sql_varchar`, `list=true`, etc. To accomplish the same goal with iQuery, pass a structure as your parameter instead of a simple string/numeric value. Note that the name attribute may be excluded since you're already specifying it when naming the param structure.
+
+```cfs
+result = new iQuery(
+	"select * from users order by lastname where type in (:typelist)",
+	{
+		typelist: {
+			value: 'a,b,c,d'
+			,list: true
+		}
+	},
+	{ maxRows: 20 }
+);
+```
