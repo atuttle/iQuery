@@ -26,6 +26,10 @@ component {
 
 		_.r = _.q.execute();
 
+		if ( isNull( _.r.getResult() ) ){
+			return _.r.getPrefix();
+		}
+
 		return _.r.getResult();
 	}
 
