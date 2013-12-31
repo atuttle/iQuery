@@ -19,15 +19,32 @@ options:    { cachedWithin: createTimeSpan(...), datasource: 'myDSN', ... }
 QoQ:        { people: new iQuery(...), ... }
 ```
 
-### Insert:
+### Simplest form:
+
+When you set `Application.datasource`, you don't actually have to pass any options at all for simple queries:
+
+```cfs
+top10users = new iQuery( "select top 10 * from users" );
+```
+
+### Parameters:
 
 ```cfs
 result = new iQuery(
 	"insert into myTable (name) values (:name)"
 	,{ name: "Bob the Builder" }
-	,{ datasource: "myDb", username: "db_user", password: "db_pass" }
 );
 inserted_id = result.IdentityCol;
+```
+
+### Options:
+
+```cfs
+result = new iQuery(
+	"select * from users order by lastname"
+	,{}
+	,{ maxRows: 20, cachedWithin: CreateTimeSpan(0,1,0,0) }
+);
 ```
 
 ### NULLs:
@@ -41,15 +58,50 @@ result = new iQuery(
 );
 ```
 
-### Read with limits:
+### Additional Parameter Attributes
+
+If you want to specify additional queryparam attributes, pass a structure rather than a simple value. The name attribute may be excluded since you're already specifying it when naming the param structure.
+
+For example, instead of using `@NULL@` as described above, you could do this:
 
 ```cfs
 result = new iQuery(
-	"select * from users order by lastname"
-	,{}
+	"select * from users where middlename = :middle"
+	,{
+		middle: { null: true }
+	}
+);
+```
+
+This more complex form can also be used to set the list attribute:
+
+```cfs
+result = new iQuery(
+	"select * from users where type in (:typelist) order by lastname"
+	,{
+		typelist: {
+			value: 'a,b,c,d'
+			,list: true
+		}
+	}
 	,{ maxRows: 20 }
 );
 ```
+
+... or to set a specific type:
+
+```cfs
+result = new iQuery(
+	"select * from users where middlename like :middle order by lastname, firstname"
+	,{
+		middle: {
+			value: 'z%'
+			,cfsqltype: 'cf_sql_varchar'
+		}
+	}
+);
+```
+
 
 ### Query of Queries:
 
@@ -64,19 +116,3 @@ variables.octogenarians = new iQuery("
 ", {}, { dbType: "query" }, { people: variables.people } );
 ```
 
-### Additional Parameter Attributes
-
-In tag-based queries you can set extra attributes like `cfsqltype=cf_sql_varchar`, `list=true`, etc. To accomplish the same goal with iQuery, pass a structure as your parameter instead of a simple string/numeric value. Note that the name attribute may be excluded since you're already specifying it when naming the param structure.
-
-```cfs
-result = new iQuery(
-	"select * from users order by lastname where type in (:typelist)"
-	,{
-		typelist: {
-			value: 'a,b,c,d'
-			,list: true
-		}
-	}
-	,{ maxRows: 20 }
-);
-```
