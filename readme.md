@@ -23,9 +23,9 @@ QoQ:        { people: new iQuery(...), ... }
 
 ```cfs
 result = new iQuery(
-    "insert into myTable (name) values (:name)",
-    { name: "Bob the Builder" },
-    { datasource: "myDb", username: "db_user", password: "db_pass" }
+	"insert into myTable (name) values (:name)",
+	{ name: "Bob the Builder" },
+	{ datasource: "myDb", username: "db_user", password: "db_pass" }
 );
 inserted_id = result.IdentityCol;
 ```
@@ -36,8 +36,8 @@ The string `@NULL@` will be automatically converted to insert a null value for t
 
 ```cfs
 result = new iQuery(
-    "insert into myTable (some_nullable_column) values (:val)",
-    { val: "@NULL@" }
+	"insert into myTable (some_nullable_column) values (:val)",
+	{ val: "@NULL@" }
 );
 ```
 
@@ -45,9 +45,9 @@ result = new iQuery(
 
 ```cfs
 result = new iQuery(
-    "select * from users order by lastname",
-    {},
-    { maxRows: 20 }
+	"select * from users order by lastname",
+	{},
+	{ maxRows: 20 }
 );
 ```
 
@@ -59,8 +59,8 @@ Pass any recordsets you want to read from as the 4th argument, qoq. Reference th
 variables.people = new iQuery("select name, age from person");
 
 variables.octogenarians = new iQuery("
-    select name, age from qoq.people
-    where age >= 80 and age <= 89
+	select name, age from qoq.people
+	where age >= 80 and age <= 89
 ", {}, { dbType: "query" }, { people: variables.people } );
 ```
 
