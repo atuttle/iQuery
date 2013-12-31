@@ -4,7 +4,7 @@ Intelligent script-based querying for CFML.
 
 Born out of the idea that script queries as designed by Adobe are too complex and unintuitive. Based on [this proposal](https://github.com/CFCommunity/CF_CleanUp#queries), with an affordance for Query of Queries since we can't use the proposed QoQ solution in userland.
 
-## Usage
+## Installation
 
 Step 1: Drop iQuery.cfc into `{cf-root}/CustomTags/com/adobe/coldfusion/`<br/>
 Step 2: There is no step 2
