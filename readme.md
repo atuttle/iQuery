@@ -11,7 +11,7 @@ Step 2: There is no step 2
 
 # Syntax:
 
-```
+```js
 [result =] new iQuery( SQL [, parameters] [, options] [, QoQ] );
 
 parameters: { id: 1, lastname: 'foo', ... }
@@ -23,13 +23,13 @@ QoQ:        { people: new iQuery(...), ... }
 
 When you set `Application.datasource`, you don't actually have to pass any options at all for simple queries:
 
-```cfs
+```js
 top10users = new iQuery( "select top 10 * from users" );
 ```
 
 ### Parameters:
 
-```cfs
+```js
 result = new iQuery(
 	"insert into myTable (name) values (:name)"
 	,{ name: "Bob the Builder" }
@@ -39,7 +39,7 @@ inserted_id = result.generatedKey;
 
 ### Options:
 
-```cfs
+```js
 result = new iQuery(
 	"select * from users order by lastname"
 	,{}
@@ -51,7 +51,7 @@ result = new iQuery(
 
 The string `@NULL@` will be automatically converted to insert a null value for the specified column.
 
-```cfs
+```js
 result = new iQuery(
 	"insert into myTable (some_nullable_column) values (:val)"
 	,{ val: "@NULL@" }
@@ -64,7 +64,7 @@ If you want to specify additional queryparam attributes, pass a structure rather
 
 For example, instead of using `@NULL@` as described above, you could do this:
 
-```cfs
+```js
 result = new iQuery(
 	"select * from users where middlename = :middle"
 	,{
@@ -75,7 +75,7 @@ result = new iQuery(
 
 This more complex form can also be used to set the list attribute:
 
-```cfs
+```js
 result = new iQuery(
 	"select * from users where type in (:typelist) order by lastname"
 	,{
@@ -90,7 +90,7 @@ result = new iQuery(
 
 ... or to set a specific type:
 
-```cfs
+```js
 result = new iQuery(
 	"select * from users where middlename like :middle order by lastname, firstname"
 	,{
@@ -107,7 +107,7 @@ result = new iQuery(
 
 Pass any recordsets you want to read from as the 4th argument, qoq. Reference them in your SQL as `qoq.[key_name]`. Don't forget to set `dbtype: 'query'` in options.
 
-```cfs
+```js
 variables.people = new iQuery("select name, age from person");
 
 variables.octogenarians = new iQuery("
